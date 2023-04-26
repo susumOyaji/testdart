@@ -67,6 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
     const url = 'http://localhost:3000'; //←ここに表示させたいURLを入力する
 
     try {
+      //final response = await http.get(Uri.parse('http://localhost:3000'));
       final response = await http.get(Uri.parse(url).replace(queryParameters: {
         'data': jsonEncode(data),
       }));
@@ -80,7 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
     } catch (e) {
       setState(() {
         _isLoading = false;
-        _message = 'Failed to load data.';
+        _message = 'Failed to load data.$e';
       });
     }
 
@@ -104,7 +105,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: FutureBuilder(
           future: _data, //fetch(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (snapshot.hasData) {
+            if (!snapshot.hasData) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
