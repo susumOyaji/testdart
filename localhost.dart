@@ -24,12 +24,9 @@ Router createRouter() {
       {'id': 3, 'name': 'ユーザーC'},
     ];
     var json = jsonEncode(users);
-    return Response.ok(
-      json, 
-      headers: {
-        "content-type": "application/json"
-        }
-      );
+    return Response.ok(router,
+      headers: { "content-type": "application/json" }
+    );
     //"<html><body><b>Dart</b>で出力したHTMLです！</body></html>",
     //headers: {"content-type": "text/html"});
   });
