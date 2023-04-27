@@ -5,6 +5,14 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Dart: Launch App",
+            "type": "dart",
+            "request": "launch",
+            "program": "dart run localhost.dart",
+            "args": [],
+            "console": "terminal"
+        },
+        {
             "name": "testdart",
             "request": "launch",
             "type": "dart"

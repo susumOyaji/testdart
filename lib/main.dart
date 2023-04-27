@@ -67,10 +67,14 @@ class _MyHomePageState extends State<MyHomePage> {
     const url = 'http://localhost:3000'; //←ここに表示させたいURLを入力する
 
     try {
-      //final response = await http.get(Uri.parse('http://localhost:3000'));
+      //final response =
+      //    await http.get(Uri.parse('http://localhost:3000/api/users'));
+      //final jsonData = jsonDecode(response.body);
+      //return jsonData;
       final response = await http.get(Uri.parse(url).replace(queryParameters: {
         'data': jsonEncode(data),
       }));
+    
       print("ref");
 
       setState(() {
