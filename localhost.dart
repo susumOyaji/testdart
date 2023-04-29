@@ -4,6 +4,7 @@ import 'dart:io';
 //import 'package:shelf/shelf_io.dart' as shelf_io;
 //import 'package:shelf_router/shelf_router.dart';
 
+<<<<<<< HEAD
 void main() async {
   final server = await HttpServer.bind(InternetAddress.loopbackIPv4, 8080);
   print('Listening on localhost:${server.port}');
@@ -56,6 +57,27 @@ void handlePostRequest(HttpRequest request) async {
 
 
 /*
+=======
+/*Future<void> main() async {
+  final server = await HttpServer.bind(InternetAddress.anyIPv4, 8080);
+  print('Listening on localhost:${server.port}');
+
+  await for (HttpRequest request in server) {
+    try {
+      final response = request.response;
+      response.statusCode = HttpStatus.ok;
+      response.headers.contentType = ContentType.json;
+      response.write(json.encode({'message': 'Hello World'}));
+      print("object to localhost");
+      await response.close();
+    } catch (e) {
+      print('Exception in handling request: $e');
+    }
+  }
+}
+*/
+
+>>>>>>> 08e18759b5b35fceb344fdf6c4fb78db22df4fa8
 void main(List<String> arguments) async {
   createServer();
 }
@@ -70,38 +92,25 @@ Future<HttpServer> createServer() async {
 Router createRouter() {
   final router = Router();
   router.get('/', (Request request) {
+    return Response.ok("<html><body>ホットリロード対応です！</body></html>",
+        headers: {"content-type": "text/html"});
+  });
+  router.get('/api/users', (Request request) {
     var users = [
       {'id': 1, 'name': 'ユーザーA'},
       {'id': 2, 'name': 'ユーザーB'},
       {'id': 3, 'name': 'ユーザーC'},
     ];
     var json = jsonEncode(users);
-    return Response.ok(router,
-      headers: { "content-type": "application/json" }
-    );
-    //"<html><body><b>Dart</b>で出力したHTMLです！</body></html>",
-    //headers: {"content-type": "text/html"});
+    return Response.ok(json, headers: {"content-type": "application/json"});
   });
-  /*
-    router.get('/api/users', (Request request) {
-    var users = [
-      {'id': 1, 'name': 'ユーザーA'},
-      {'id': 2, 'name': 'ユーザーB'},
-      {'id': 3, 'name': 'ユーザーC'},
-    ];
-    var json = jsonEncode(users);
-    return Response.ok(
-      json,
-      headers: {
-        "content-type" : "application/json"
-      }
-    );
-  });
-    */
   return router;
 }
 
+<<<<<<< HEAD
 */
+=======
+>>>>>>> 08e18759b5b35fceb344fdf6c4fb78db22df4fa8
 
  ///  /project/lib/test.dart
 //import 'dart:io';
@@ -116,8 +125,16 @@ Future<void> httpServer() async {
     3000,
   );
   await for (HttpRequest request in server) {
-    request.response
-      ..write('Hello!')
-      ..close();
+    try {
+      final response = request.response;
+      response.statusCode = HttpStatus.ok;
+      response.headers.contentType = ContentType.json;
+      response.write(json.encode({'message': 'Hello World'}));
+      print('Exception in handling request:');
+      await response.close();
+    } catch (e) {
+      print('Exception in handling request: $e');
+    }
   }
-}   */
+}   
+*/
