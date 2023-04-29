@@ -6,6 +6,7 @@ import 'dart:convert';
 //import 'package:shelf_cors_headers/shelf_cors_headers.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart';
+import 'package:shelf/shelf.dart' as shelf;
 import 'package:shelf_cors_headers/shelf_cors_headers.dart';
 
 
@@ -61,13 +62,15 @@ void handlePostRequest(HttpRequest request) async {
 
 
 void main() async {
-  var handler = const Pipeline()
+  var handler = const shelf.Pipeline()
       // Just add corsHeaders() middleware.
       .addMiddleware(corsHeaders())
       .addHandler(_requestHandler);
 
   await serve(handler, 'localhost', 3000);
-  print('Serving at }');
+  //shelf.server(handler, 'localhost', 3000).then((server) {
+  //print('Serving at http://${server.address.host}:${server.port}');
+//});
 
 }
 

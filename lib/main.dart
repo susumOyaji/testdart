@@ -142,7 +142,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         'You have pushed the button this many Message:',
                       ),
                       Text(
-                        '$_message',
+                        '$_message$_data',
                         style: Theme.of(context).textTheme.headlineMedium,
                       ),
 
