@@ -4,7 +4,7 @@ import 'dart:io';
 //import 'package:shelf/shelf_io.dart' as shelf_io;
 //import 'package:shelf_router/shelf_router.dart';
 
-<<<<<<< HEAD
+
 void main() async {
   final server = await HttpServer.bind(InternetAddress.loopbackIPv4, 8080);
   print('Listening on localhost:${server.port}');
@@ -57,7 +57,7 @@ void handlePostRequest(HttpRequest request) async {
 
 
 /*
-=======
+
 /*Future<void> main() async {
   final server = await HttpServer.bind(InternetAddress.anyIPv4, 8080);
   print('Listening on localhost:${server.port}');
@@ -106,11 +106,6 @@ Router createRouter() {
   });
   return router;
 }
-
-<<<<<<< HEAD
-*/
-=======
->>>>>>> 08e18759b5b35fceb344fdf6c4fb78db22df4fa8
 
  ///  /project/lib/test.dart
 //import 'dart:io';
