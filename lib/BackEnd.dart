@@ -63,7 +63,7 @@ class _UsersPageState extends State<UsersPage> {
 
   Future<void> _loadUsers() async {
     final response =
-        await http.get(Uri.parse('http://localhost:3000/api/users'));
+        await http.get(Uri.parse('http://localhost:8080'));
     if (response.statusCode == 200) {
       final List<dynamic> responseData = json.decode(response.body);
       setState(() {

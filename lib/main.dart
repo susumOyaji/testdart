@@ -4,14 +4,11 @@ import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
 // myapp.dart
 import 'dart:io';
-<<<<<<< HEAD
 import 'main1.dart';
-=======
 import 'BackEnd.dart';
->>>>>>> 08e18759b5b35fceb344fdf6c4fb78db22df4fa8
 
 void main() {
-  runApp(const BackEnd());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -40,110 +37,72 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-  String _word = '';
-  String _data = "";
-  //var url = 'http://localhost:3000'; //←ここに表示させたいURLを入力する
+  late Future _data;
+  //int MarketCap = 0;
+  bool _isLoading = false;
+  String _message = '';
 
-   List _users = [];
+  EdgeInsets std_margin =
+      const EdgeInsets.only(left: 10, top: 10, right: 10, bottom: 0);
 
-
+  static List<List<dynamic>> data = [
+    ["6758", 200, 1665],
+    ["6976", 300, 1801],
+    ["3436", 0, 0],
+  ];
 
   @override
   void initState() {
     super.initState();
     // ここで初期化処理を行う
     //runCommand();
-<<<<<<< HEAD
     _data = fetch();
-   //_data =fetch();
-  //_getUsers();
+    //_data =fetch();
+    //_getUsers();
   }
 
-
+  var url = 'http://localhost:3000'; //←ここに表示させたいURLを入力する
 
   Future fetch() async {
     //final String json;
     //List<dynamic> jsonArray = [];
 
-=======
-    //_data = fetch();
-    //_data=fetchUsers();
-  }
-
-  void _incrementCounter() {
->>>>>>> 08e18759b5b35fceb344fdf6c4fb78db22df4fa8
     setState(() {
-      _counter++;
+      _isLoading = true;
+      _message = 'Loading data...';
     });
-  }
-
-<<<<<<< HEAD
-    const url = 'http://localhost:8080'; //←ここに表示させたいURLを入力する
 
     try {
-      final response =
-          await http.get(Uri.parse('http://localhost:8080'));
-      final jsonData = jsonDecode(response.body);
+      //final response =
+      //    await http.get(Uri.parse('http://localhost:3000/api/users'));
+      //final jsonData = jsonDecode(response.body);
       //return jsonData;
-
-     // final response = await http.get(Uri.parse(url).replace(queryParameters: {
-     //   'data': jsonEncode(data),
-     // }));
+      final response = await http.get(Uri.parse(url).replace(queryParameters: {
+        'data': jsonEncode(data),
+      }));
 
       print("ref");
-=======
-  
 
-  Future<void> fetchUsers() async {
-    final response =
-        await http.get(Uri.parse('http://localhost:3000/api/users'));
->>>>>>> 08e18759b5b35fceb344fdf6c4fb78db22df4fa8
-
-
-  
-
-    if (response.statusCode == 200) {
       setState(() {
-        _data = jsonDecode(response.body);
+        _isLoading = true;
+        _message = 'Loading data...';
       });
-      return jsonDecode(response.body);
-    } else {
-      throw Exception('Failed to load users');
-    }
-  }
-
-  Future<bool> hasData() async {
-    final response =
-        await http.get(Uri.parse('http://localhost:3000/api/users'));
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
-      if (data.isNotEmpty) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  Future<void> _handleHttp() async {
-    var url =
-        Uri.https('www.googleapis.com', '/books/v1/volumes', {'q': 'Flutter'});
-    //var url =
-    //    Uri.http('localhost:8080');
-
-    var response = await http.get(url);
-    if (response.statusCode == 200) {
-      var jsonResponse =
-          convert.jsonDecode(response.body) as Map<String, dynamic>;
-      var itemCount = jsonResponse['totalItems'];
-      print('Number of books about http: $itemCount.');
+      return json.decode(response.body);
+    } catch (e) {
       setState(() {
-        _counter = itemCount;
-        _word = 'Flutter';
+        _isLoading = false;
+        _message = 'Failed to load data.$e';
       });
-    } else {
-      print('Request failed with status: ${response.statusCode}.');
     }
+
+    //if (response.statusCode == 200) {
+    // データを取得できた場合
+
+    //  return json.decode(response.body);
+    //} else {
+    // エラーが発生した場合
+    //throw Exception('Failed to load data');
+    //}
   }
 
   @override
@@ -153,7 +112,6 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-<<<<<<< HEAD
         child: FutureBuilder(
           future: _data,
           builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -195,23 +153,10 @@ class _MyHomePageState extends State<MyHomePage> {
               ],
             );
           },
-=======
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              '「$_word」の検索結果:',
-            ),
-            Text(
-              '$_data',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
->>>>>>> 08e18759b5b35fceb344fdf6c4fb78db22df4fa8
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: hasData,
+        onPressed: fetch,
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ),

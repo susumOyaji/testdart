@@ -1,10 +1,16 @@
 import 'dart:convert';
-import 'dart:io';
+//import 'dart:io';
 //import 'package:shelf/shelf.dart';
 //import 'package:shelf/shelf_io.dart' as shelf_io;
-//import 'package:shelf_router/shelf_router.dart';
+//import 'package:shelf_cors/shelf_cors.dart';
+//import 'package:shelf_cors_headers/shelf_cors_headers.dart';
+import 'package:shelf/shelf.dart';
+import 'package:shelf/shelf_io.dart';
+import 'package:shelf_cors_headers/shelf_cors_headers.dart';
 
 
+
+/*
 void main() async {
   final server = await HttpServer.bind(InternetAddress.loopbackIPv4, 8080);
   print('Listening on localhost:${server.port}');
@@ -43,6 +49,7 @@ void handlePostRequest(HttpRequest request) async {
     ..write('Thank you for your submission, $body')
     ..close();
 }
+*/
 
 
 
@@ -53,10 +60,29 @@ void handlePostRequest(HttpRequest request) async {
 
 
 
+void main() async {
+  var handler = const Pipeline()
+      // Just add corsHeaders() middleware.
+      .addMiddleware(corsHeaders())
+      .addHandler(_requestHandler);
+
+  await serve(handler, 'localhost', 3000);
+  print('Serving at }');
+
+}
+
+Response _requestHandler(Request request) {
+  // Handle GET request.
+    var data = {'message': 'Hello, world!'};
+    var body = jsonEncode(data);
+    return Response.ok(body);
+  //print('Serving at http://${request.url}');
+  //return Response.ok('Request for "${request.url}"');
+}
 
 
 
-/*
+
 
 /*Future<void> main() async {
   final server = await HttpServer.bind(InternetAddress.anyIPv4, 8080);
@@ -76,7 +102,7 @@ void handlePostRequest(HttpRequest request) async {
   }
 }
 */
-
+/*
 >>>>>>> 08e18759b5b35fceb344fdf6c4fb78db22df4fa8
 void main(List<String> arguments) async {
   createServer();
@@ -109,6 +135,7 @@ Router createRouter() {
 
  ///  /project/lib/test.dart
 //import 'dart:io';
+*/
 /*
 void main() async {
   await httpServer();
