@@ -38,6 +38,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   late Future _data;
+  var _response;
   //int MarketCap = 0;
   bool _isLoading = false;
   String _message = '';
@@ -56,8 +57,8 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     // ここで初期化処理を行う
     //runCommand();
-    _data = fetch();
-    //_data =fetch();
+    //_response = fetch();
+    _data =fetch();
     //_getUsers();
   }
 
@@ -86,7 +87,11 @@ class _MyHomePageState extends State<MyHomePage> {
       setState(() {
         _isLoading = true;
         _message = 'Loading data...';
+        _response = json.decode(response.body);
+        print(_response);
+        //_data = json.decode(response.body);
       });
+
       return json.decode(response.body);
     } catch (e) {
       setState(() {
@@ -142,7 +147,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         'You have pushed the button this many Message:',
                       ),
                       Text(
-                        '$_message$_data',
+                        '$_message$_response',
                         style: Theme.of(context).textTheme.headlineMedium,
                       ),
 
