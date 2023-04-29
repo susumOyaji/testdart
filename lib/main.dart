@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'dart:io';
+import 'main1.dart';
 
 void main() {
   runApp(const MyApp());
@@ -47,13 +48,21 @@ class _MyHomePageState extends State<MyHomePage> {
     ["3436", 0, 0],
   ];
 
+   List _users = [];
+
+
+
   @override
   void initState() {
     super.initState();
     // ここで初期化処理を行う
     //runCommand();
     _data = fetch();
+   //_data =fetch();
+  //_getUsers();
   }
+
+
 
   Future fetch() async {
     //final String json;
@@ -64,17 +73,18 @@ class _MyHomePageState extends State<MyHomePage> {
       _message = 'Loading data...';
     });
 
-    const url = 'http://localhost:3000'; //←ここに表示させたいURLを入力する
+    const url = 'http://localhost:8080'; //←ここに表示させたいURLを入力する
 
     try {
-      //final response =
-      //    await http.get(Uri.parse('http://localhost:3000/api/users'));
-      //final jsonData = jsonDecode(response.body);
+      final response =
+          await http.get(Uri.parse('http://localhost:8080'));
+      final jsonData = jsonDecode(response.body);
       //return jsonData;
-      final response = await http.get(Uri.parse(url).replace(queryParameters: {
-        'data': jsonEncode(data),
-      }));
-    
+
+     // final response = await http.get(Uri.parse(url).replace(queryParameters: {
+     //   'data': jsonEncode(data),
+     // }));
+
       print("ref");
 
       setState(() {
@@ -107,7 +117,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Center(
         child: FutureBuilder(
-          future: _data, //fetch(),
+          future: _data,
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (!snapshot.hasData) {
               return const Center(
